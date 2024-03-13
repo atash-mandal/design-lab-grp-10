@@ -16,6 +16,44 @@ def SpeakText(command):
     engine.say(command) 
     engine.runAndWait()
 
+def recognize_speech_from_wav(wav_file):
+    # Initialize the recognizer
+    recognizer = sr.Recognizer()
+    
+    # Use the context manager to automatically release the resources
+    with sr.AudioFile(wav_file) as source:
+        # Adjust the recognizer sensitivity to ambient noise
+        # recognizer.adjust_for_ambient_noise(source)
+        
+        # Listen to the file
+        audio_data = recognizer.record(source)
+        
+        try:
+            # Recognize the speech
+            text = recognizer.recognize_google(audio_data)
+            return text
+        except sr.UnknownValueError:
+            return "Speech Recognition could not understand audio"
+        except sr.RequestError as e:
+            return f"Could not request results from Google Speech Recognition service; {e}"
+        except Exception as e:
+            return f"Error: {e}"
+
+def text_to_speech(text):
+    # Initialize the text-to-speech engine
+    engine = pyttsx3.init()
+    
+    # Set properties (optional)
+    engine.setProperty('rate', 150)  # Speed of speech
+    engine.setProperty('volume', 0.9)  # Volume (0.0 to 1.0)
+    
+    # Convert text to speech
+    engine.say(text)
+    
+    # Wait for the speech to finish
+    engine.runAndWait()
+
+
 # Function to recognize speech
 def recognize_speech():
     try:
