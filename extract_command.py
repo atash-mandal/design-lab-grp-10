@@ -7,7 +7,7 @@ def extract_attributes(text):
     device = None
 
     # Define keywords for actions and devices
-    action_keywords = {"turn": ["on", "off", "open", "close", "add", "authenticate"]}
+    action_keywords = {"on", "off", "open", "close", "add", "authenticate"}
     device_keywords = {"light": ["light1", "light2", "light3"], "fan": ["fan1", "fan2", "fan3", "fan4"]}
 
     # Search for action
